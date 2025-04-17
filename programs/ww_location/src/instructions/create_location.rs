@@ -5,6 +5,9 @@ use crate::{error::{LocationErrorCodes}, events, state::*, LocationCreatedEvent,
 pub struct CreateLocation<'info> {
 
     #[account(mut)]
+    pub payer: Signer<'info>,
+
+    #[account(mut)]
     pub location_counter: Account<'info, LocationCounter>,
 
     #[account(
@@ -15,9 +18,6 @@ pub struct CreateLocation<'info> {
         space = 8 + std::mem::size_of::<LocationAccount>(),
     )]
     pub location: Account<'info, LocationAccount>,
-
-    #[account(mut)]
-    pub payer: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }

@@ -4,6 +4,9 @@ use crate::{state::LocationCounter, LOCATION_COUNTER_SIZE};
 
 #[derive(Accounts)]
 pub struct InitializeLocation<'info> {
+    #[account(mut)]
+    pub payer: Signer<'info>,
+
     #[account(
         init,
         payer = payer,
@@ -12,9 +15,6 @@ pub struct InitializeLocation<'info> {
         space = 8 + LOCATION_COUNTER_SIZE
     )]
     pub location_counter: Account<'info, LocationCounter>,
-
-    #[account(mut)]
-    pub payer: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }

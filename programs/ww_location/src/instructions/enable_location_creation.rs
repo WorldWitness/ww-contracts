@@ -6,10 +6,10 @@ use crate::state::*;
 pub struct EnableLocationCreation<'info> {
 
     #[account(mut)]
-    pub location_counter: Account<'info, LocationCounter>,
+    pub payer: Signer<'info>,
 
     #[account(mut)]
-    pub payer: Signer<'info>,
+    pub location_counter: Account<'info, LocationCounter>,
 
     pub system_program: Program<'info, System>,
 }
