@@ -10,10 +10,10 @@ pub use instructions::*;
 pub use state::*;
 pub use events::*;
 
-declare_id!("8oer2N17ZmMGyE3xJepNjqi2hn1EU4CwUeSWwB38PPdZ");
+declare_id!("6voAxfkWGYpi8MJSPbrrMQ9yoGumQmyr7fxW1b5zNfdZ");
 
 #[program]
-pub mod ww_location_gov {
+pub mod ww_location {
     use super::*;
 
     pub fn initialize(ctx: Context<InitializeLocation>) -> Result<()> {
@@ -39,5 +39,9 @@ pub mod ww_location_gov {
 
     pub fn change_location_policy(ctx: Context<EnableLocationCreation>, location_index : u128, policy :  LocationPolicyConfig ) ->Result<()>{
         Ok(())
+    }
+
+    pub fn create_new_segment(ctx: Context<NewSegmentRequest>) -> Result<()> {
+        handle_create_new_segment(ctx)
     }
 }

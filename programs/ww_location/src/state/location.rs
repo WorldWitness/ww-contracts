@@ -8,13 +8,13 @@ pub struct LocationCounter {
 
 #[account]
 pub struct Location {
-    pub current_segment_pk : Option<Pubkey>,
+    pub segment_index: u128,
     pub is_live : bool,
+    pub last_created :i64
 }
 
 #[account]
 pub struct SpacetimeSegment{
-    pub previous_segment_pk : Option<Pubkey>,
     pub start_time : i64,
     pub end_time : i64
 }

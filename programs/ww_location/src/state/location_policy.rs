@@ -4,7 +4,7 @@ use anchor_lang::prelude::{ Pubkey,*};
 pub struct LocationPolicy {
     pub min_witnesses: u32,
     pub min_verifiers: u32,
-    pub segment_duration: u64,
+    pub segment_duration: i64,
 }
 
 
@@ -12,5 +12,5 @@ pub struct LocationPolicy {
 pub struct LocationPolicyConfig{
     pub min_witnesses: u32,
     pub min_verifiers: u32,
-    pub segment_duration: u64,
+    pub segment_duration: i64,
 }

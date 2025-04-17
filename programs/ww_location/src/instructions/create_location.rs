@@ -54,7 +54,6 @@ pub fn handle_create_location(
 
 
     let new_location = &mut ctx.accounts.location;
-    new_location.current_segment_pk = None;
 
     let new_metadata = &mut ctx.accounts.location_metadata;
     new_metadata.bounding_box = metadata.bounding_box;
