@@ -19,7 +19,7 @@ pub struct InitializeLocation<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handle_initialize_location(ctx: Context<InitializeLocation>) -> Result<()> {
+pub fn handle_initialize_location_gov(ctx: Context<InitializeLocation>) -> Result<()> {
     let location_counter = &mut ctx.accounts.location_counter;
     location_counter.current_index = 0;
     location_counter.is_frozen = true;

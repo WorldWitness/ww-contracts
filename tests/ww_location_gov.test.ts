@@ -2,7 +2,7 @@ import { Buffer } from "buffer";
 import { WwLocation } from "../target/types/ww_location";
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
 import * as general from './general'
-import * as ww_location from './programs/ww_location'
+import * as ww_location from './programs/ww_location_gov'
 describe("ww_location", () => {
   // Configure the client to use the local cluster.
 

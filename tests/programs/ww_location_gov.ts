@@ -1,12 +1,12 @@
 import { Program } from "@coral-xyz/anchor";
 import * as anchor from "@coral-xyz/anchor";
 import { PublicKey, TransactionInstruction } from "@solana/web3.js";
-import { WwLocation } from "../../target/types/ww_location";
+import { WwLocation } from "../../target/types/ww_location_gov";
 
 
 
 
-export const program = anchor.workspace.ww_location as Program<WwLocation>;
+export const program = anchor.workspace.ww_location_gov as Program<WwLocation>;
 
 export async function create_initialize_instruction(payerPublicKey: PublicKey) : Promise<TransactionInstruction>  {
     return program.methods
