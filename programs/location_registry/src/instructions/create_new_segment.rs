@@ -1,26 +1,20 @@
 
 use anchor_lang::prelude::*;
-use crate::{error::{self, LocationErrorCodes}, state::*, POLICY};
+use crate::{state::*, location_registry_error::LocationRegistryErrorCode};
 
 #[derive(Accounts)]
-pub struct NewSegmentRequest<'info>{
+pub struct NewSegment<'info>{
     #[account(mut)]
     pub payer: Signer<'info>,
 
     #[account(mut)]
-    pub location: Account<'info, Location>,
-
-    #[account(
-        seeds = [POLICY.as_bytes(), location.key().as_ref()],
-        bump
-    )]
-    pub location_policy: Account<'info, LocationPolicy>,
+    pub location: Account<'info, RegisteredLocation>,
 
     #[account(
         init,
         payer = payer,
         space = 8,
-        seeds = [location.key().as_ref(), &location.segment_index.to_le_bytes()],
+        seeds = [location.key().as_ref(), &location.stats.num_segments.to_le_bytes()],
         bump
     )]
     pub new_segment: Account<'info, SpacetimeSegment>,
@@ -28,17 +22,18 @@ pub struct NewSegmentRequest<'info>{
     pub system_program: Program<'info, System>,
 }
 
-pub fn handle_create_new_segment(ctx: Context<NewSegmentRequest>) -> Result<()> {
+pub fn handler(ctx: Context<NewSegment>) -> Result<()> {
 
-    require!(ctx.accounts.location.is_live ,error::LocationErrorCodes::LocationIsNotLive);
+    require!(ctx.accounts.location.stats.is_live ,LocationRegistryErrorCode::LocationIsNotLive);
 
     let current_time : i64 = Clock::get()?.unix_timestamp;
-    require!(ctx.accounts.location_policy.segment_duration + ctx.accounts.location.last_created >  current_time, LocationErrorCodes::NewSpacetimeSegmentTooEarly) ;
+    require!(ctx.accounts.location.policy.segment_duration + ctx.accounts.location.stats.last_created >  current_time, LocationRegistryErrorCode::NewSpacetimeSegmentTooEarly) ;
 
-    ctx.accounts.location.segment_index += 1;
-    ctx.accounts.location.last_created = current_time;
+    ctx.accounts.location.stats.num_segments += 1;
+    ctx.accounts.location.stats.last_created = current_time;
     ctx.accounts.new_segment.start_time = current_time;
-    ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location_policy.segment_duration;
+    ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location.policy.segment_duration;
+    ctx.accounts.new_segment.issued_policy = ctx.accounts.location.policy.clone();
     
 
     Ok(())

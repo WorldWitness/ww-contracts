@@ -1,14 +1,24 @@
 use anchor_lang::prelude::{ Pubkey,*};
 
+use super::LocationPolicy;
+
+
 #[account]
-pub struct LocationMetadata {
-    pub name: String,
-    pub description: String,
-    pub bounding_box: BoundingBox,
+pub struct RegisteredLocation {
+    pub stats : LocationStats,
+    pub policy : LocationPolicy,
+    pub metadata : LocationMetadata
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
-pub struct LocationMetadataConfig {
+pub struct LocationStats {
+    pub num_segments: u128,
+    pub is_live : bool,
+    pub last_created :i64,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct LocationMetadata {
     pub name: String,
     pub description: String,
     pub bounding_box: BoundingBox,

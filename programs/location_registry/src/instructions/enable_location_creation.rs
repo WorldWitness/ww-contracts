@@ -15,7 +15,7 @@ pub struct EnableLocationCreation<'info> {
 }
 
 
-pub fn handle_enable_location_creation(ctx: Context<EnableLocationCreation>) -> Result<()> {
+pub fn handler(ctx: Context<EnableLocationCreation>) -> Result<()> {
     let location_counter = &mut ctx.accounts.location_counter;
     location_counter.is_frozen = false;
     Ok(())

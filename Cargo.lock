@@ -1905,6 +1905,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "spacetime_segment_manager"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "location_registry",
+ "witness_manager",
+]
+
+[[package]]
 name = "subtle"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2208,10 +2217,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "witness"
+name = "witness_manager"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
+ "location_registry",
 ]
 
 [[package]]

@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use crate::{error::LocationErrorCodes, events, state::*, LocationCreatedEvent, LOCATION, METADATA, POLICY};
+use crate::{events, location_registry_error::LocationRegistryErrorCode, state::*, LocationCreatedEvent, LOCATION };
 
 #[derive(Accounts)]
 pub struct CreateLocation<'info> {
@@ -13,59 +13,39 @@ pub struct CreateLocation<'info> {
     #[account(
         init,
         payer = payer,
-        seeds = [LOCATION.as_bytes(), &location_counter.current_index.to_le_bytes()],
+        seeds = [LOCATION.as_bytes(), &location_counter.num_locations.to_le_bytes()],
         bump,
-        space = 8 + std::mem::size_of::<Location>(),
+        space = 8 + std::mem::size_of::<RegisteredLocation>(),
     )]
-    pub location: Account<'info, Location>,
-
-    #[account(
-        init,
-        payer = payer,
-        seeds = [METADATA.as_bytes(), &location_counter.current_index.to_le_bytes()],
-        bump,
-        space = 8 + std::mem::size_of::<LocationMetadata>(),
-    )]
-    pub location_metadata: Account<'info, LocationMetadata>,
-
-    #[account(
-        init,
-        payer = payer,
-        seeds = [POLICY.as_bytes(), &location_counter.current_index.to_le_bytes()],
-        bump,
-        space = 8 + std::mem::size_of::<LocationPolicy>(),
-    )]
-    pub location_policy: Account<'info, LocationPolicy>,
+    pub location: Account<'info, RegisteredLocation>,
 
     pub system_program: Program<'info, System>,
 }
 
 
-pub fn handle_create_location(
+pub fn handler(
     ctx: Context<CreateLocation>,
-    metadata :  LocationMetadataConfig,
-    policy : LocationPolicyConfig
+    given_metadata :  LocationMetadata,
+    given_policy : LocationPolicy
 
 ) -> Result<()> {
 
     let counter = &mut ctx.accounts.location_counter;
-    require!(!counter.is_frozen, LocationErrorCodes::LocationCreationFrozen);
-    counter.current_index += 1;
+    require!(!counter.is_frozen, LocationRegistryErrorCode::LocationCreationFrozen);
+    counter.num_locations += 1;
 
 
-    let new_location = &mut ctx.accounts.location;
+    let new_stats = &mut ctx.accounts.location.stats;
+    new_stats.is_live = false;
+    new_stats.num_segments = 0;
 
-    let new_metadata = &mut ctx.accounts.location_metadata;
-    new_metadata.bounding_box = metadata.bounding_box;
-    new_metadata.name = metadata.name;
-    new_metadata.description = metadata.description;
+    let new_metadata = &mut ctx.accounts.location.metadata;
+    *new_metadata = given_metadata;
 
-    let new_policy = &mut ctx.accounts.location_policy;
-    new_policy.min_verifiers = policy.min_verifiers;
-    new_policy.min_witnesses = policy.min_witnesses;
-    new_policy.segment_duration = policy.segment_duration;
+    let new_policy = &mut ctx.accounts.location.policy;
+    *new_policy = given_policy;
 
-    emit!(LocationCreatedEvent{ index: counter.current_index  });
+    emit!(LocationCreatedEvent{ index: counter.num_locations  });
 
     return Ok(());
 }

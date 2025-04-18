@@ -1,9 +1,10 @@
 use anchor_lang::prelude::*;
 
-use crate::{state::LocationCounter, LOCATION_COUNTER_SIZE};
+use crate::{state::LocationCounter, constants::LOCATION_COUNTER_SIZE};
+
 
 #[derive(Accounts)]
-pub struct InitializeLocation<'info> {
+pub struct InitializeLocationRegistry<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
 
@@ -19,9 +20,9 @@ pub struct InitializeLocation<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handle_initialize_location_gov(ctx: Context<InitializeLocation>) -> Result<()> {
+pub fn handler(ctx: Context<InitializeLocationRegistry>) -> Result<()> {
     let location_counter = &mut ctx.accounts.location_counter;
-    location_counter.current_index = 0;
+    location_counter.num_locations = 0;
     location_counter.is_frozen = true;
     Ok(())
 }
