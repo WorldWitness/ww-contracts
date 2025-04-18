@@ -1,9 +1,9 @@
 import { Buffer } from "buffer";
-import { WwLocation } from "../target/types/ww_location";
+import { WwLocation } from "../target/types/location_registry_mint";
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
 import * as general from './general'
-import * as ww_location from './programs/ww_location'
-describe("ww_location", () => {
+import * as location_registry_mint from './programs/location_registry_mint'
+describe("location_registry_mint", () => {
   // Configure the client to use the local cluster.
 
   const payer = Keypair.generate();
@@ -15,21 +15,21 @@ describe("ww_location", () => {
     await general.get_balance(connection, payer.publicKey);
     
 
-    const initializeInstruction = await ww_location.create_initialize_instruction(payer.publicKey);
+    const initializeInstruction = await location_registry_mint.create_initialize_instruction(payer.publicKey);
     await general.execute_properly_signed_transaction(connection, [initializeInstruction], [payer]);
 
     const locationCounterPda = await PublicKey.findProgramAddress(
       [Buffer.from("location_counter")],
-      ww_location.program.programId
+      location_registry_mint.program.programId
     );
-    let counterAccount  = await ww_location.get_location_counter(locationCounterPda[0]);
+    let counterAccount  = await location_registry_mint.get_location_counter(locationCounterPda[0]);
 
     expect(counterAccount.isFrozen).toBeTruthy();
 
-    const enableInstruction = await ww_location.create_enable_location_instruction(payer.publicKey, locationCounterPda[0]);
+    const enableInstruction = await location_registry_mint.create_enable_location_instruction(payer.publicKey, locationCounterPda[0]);
     await general.execute_properly_signed_transaction(connection, [enableInstruction], [payer]);
 
-    counterAccount = await ww_location.program.account.locationCounter.fetch(locationCounterPda[0]) ;
+    counterAccount = await location_registry_mint.program.account.locationCounter.fetch(locationCounterPda[0]) ;
     expect(counterAccount.isFrozen).toBeFalsy();
   });
 

@@ -6,7 +6,8 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-ww_location = "8oer2N17ZmMGyE3xJepNjqi2hn1EU4CwUeSWwB38PPdZ"
+location_registry = "8oer2N17ZmMGyE3xJepNjqi2hn1EU4CwUeSWwB38PPdZ"
+witness = "27J4UkeFkTWmkz7dBv3JLM72pPN3DxRocDTigNhBgKqH"
 
 [registry]
 url = "https://api.apr.dev"

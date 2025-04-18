@@ -13,7 +13,7 @@ pub use events::*;
 declare_id!("6voAxfkWGYpi8MJSPbrrMQ9yoGumQmyr7fxW1b5zNfdZ");
 
 #[program]
-pub mod ww_location {
+pub mod location_registry_mint {
     use super::*;
 
     pub fn initialize(ctx: Context<InitializeLocation>) -> Result<()> {

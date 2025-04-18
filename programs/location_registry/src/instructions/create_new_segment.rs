@@ -31,7 +31,15 @@ pub struct NewSegmentRequest<'info>{
 pub fn handle_create_new_segment(ctx: Context<NewSegmentRequest>) -> Result<()> {
 
     require!(ctx.accounts.location.is_live ,error::LocationErrorCodes::LocationIsNotLive);
-    require!(ctx.accounts.location_policy.segment_duration + ctx.accounts.location.last_created >  Clock::get()?.unix_timestamp, LocationErrorCodes::NewSpacetimeSegmentTooEarly) ;
+
+    let current_time : i64 = Clock::get()?.unix_timestamp;
+    require!(ctx.accounts.location_policy.segment_duration + ctx.accounts.location.last_created >  current_time, LocationErrorCodes::NewSpacetimeSegmentTooEarly) ;
+
     ctx.accounts.location.segment_index += 1;
+    ctx.accounts.location.last_created = current_time;
+    ctx.accounts.new_segment.start_time = current_time;
+    ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location_policy.segment_duration;
+    
+
     Ok(())
 }
