@@ -716,6 +716,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "location_epoch"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "location_registry",
+ "witness_manager",
+]
+
+[[package]]
 name = "location_registry"
 version = "0.1.0"
 dependencies = [
@@ -1902,15 +1911,6 @@ dependencies = [
  "solana-serialize-utils",
  "solana-short-vec",
  "solana-system-interface",
-]
-
-[[package]]
-name = "spacetime_segment_manager"
-version = "0.1.0"
-dependencies = [
- "anchor-lang",
- "location_registry",
- "witness_manager",
 ]
 
 [[package]]

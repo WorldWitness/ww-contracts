@@ -30,6 +30,8 @@ pub fn handler(
 
 ) -> Result<()> {
 
+    // TODO: Make sure only the DAO can create a Location
+
     let counter = &mut ctx.accounts.location_counter;
     require!(!counter.is_frozen, LocationRegistryErrorCode::LocationCreationFrozen);
     counter.num_locations += 1;

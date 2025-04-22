@@ -13,7 +13,7 @@ pub use witness_error::*;
 declare_id!("27J4UkeFkTWmkz7dBv3JLM72pPN3DxRocDTigNhBgKqH");
 
 #[program]
-pub mod witness {
+pub mod witness_manager {
     use super::*;
 
     pub fn initialize_witness(ctx: Context<InitializeWitness>, seed: String, wc : WitnessCapabilities) -> Result<()> {

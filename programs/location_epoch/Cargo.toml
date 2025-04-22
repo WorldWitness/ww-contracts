@@ -1,12 +1,12 @@
 [package]
-name = "witness_manager"
+name = "location_epoch"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "witness_manager"
+name = "location_epoch"
 
 [features]
 default = []
@@ -20,5 +20,8 @@ idl-build = ["anchor-lang/idl-build"]
 [dependencies]
 anchor-lang = "0.31.0"
 location_registry = { path = "../location_registry", features = ["no-entrypoint"] } 
-location_epoch = { path = "../location_epoch", features = ["no-entrypoint"] } 
+witness_manager = { path = "../witness_manager", features = ["no-entrypoint"] } 
+
+
+
 

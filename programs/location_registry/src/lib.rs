@@ -42,7 +42,7 @@ pub mod location_registry {
         Ok(())
     }
 
-    pub fn create_new_segment(ctx: Context<NewSegment>) -> Result<()> {
-        create_new_segment::handler(ctx)
-    }
+    // pub fn create_new_segment(ctx: Context<CreateNewLocationEpoch>) -> Result<()> {
+    //     create_new_location_epoch::handler(ctx)
+    // }
 }

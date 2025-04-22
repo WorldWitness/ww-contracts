@@ -1,9 +1,10 @@
 
 use anchor_lang::prelude::*;
-use crate::{state::*, location_registry_error::LocationRegistryErrorCode};
+use location_registry::{LocationEpoch, RegisteredLocation};
+use crate::{error::LocationEpochError, state::*};
 
 #[derive(Accounts)]
-pub struct NewSegment<'info>{
+pub struct CreateNewLocationEpoch<'info>{
     #[account(mut)]
     pub payer: Signer<'info>,
 
@@ -17,17 +18,17 @@ pub struct NewSegment<'info>{
         seeds = [location.key().as_ref(), &location.stats.num_segments.to_le_bytes()],
         bump
     )]
-    pub new_segment: Account<'info, SpacetimeSegment>,
+    pub new_epoch: Account<'info, LocationEpoch>,
 
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<NewSegment>) -> Result<()> {
+pub fn handler(ctx: Context<CreateNewLocationEpoch>) -> Result<()> {
 
-    require!(ctx.accounts.location.stats.is_live ,LocationRegistryErrorCode::LocationIsNotLive);
+    require!(ctx.accounts.location.stats.is_live ,LocationEpochError::CustomError);
 
     let current_time : i64 = Clock::get()?.unix_timestamp;
-    require!(ctx.accounts.location.policy.segment_duration + ctx.accounts.location.stats.last_created >  current_time, LocationRegistryErrorCode::NewSpacetimeSegmentTooEarly) ;
+    require!(ctx.accounts.location.policy.segment_duration + ctx.accounts.location.stats.last_created >  current_time, LocationEpochError::CustomError) ;
 
     ctx.accounts.location.stats.num_segments += 1;
     ctx.accounts.location.stats.last_created = current_time;

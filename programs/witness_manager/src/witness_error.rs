@@ -8,5 +8,7 @@ pub enum WitnessErrorCode {
     WitnessIsNotDisabled,
     WitnessCanNotReclaimMoreThanDeposit,
     TooEarlyToUnlockNextChallenge,
-    NotEnoughFundsinDeposit
+    NotEnoughFundsinDeposit,
+    NotCurrentSpacetimeSegment,
+    IncorrectPresenceChallenge
 }
