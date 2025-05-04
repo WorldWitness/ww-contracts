@@ -12,7 +12,7 @@ pub use state::*;
 declare_id!("DBARz9f17bZT6infskfhWpepU8aj46nCN7p7hf7pFKxC");
 
 #[program]
-pub mod location_epoch {
+pub mod location_epoch_manager_manager {
     use super::*;
 
     pub fn create_new_location_epoch(ctx: Context<CreateNewLocationEpoch>) -> Result<()> {

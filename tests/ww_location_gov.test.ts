@@ -1,5 +1,4 @@
 import { Buffer } from "buffer";
-import { WwLocation } from "../target/types/location_registry";
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
 import * as general from './general'
 import * as location_registry from './programs/location_registry'

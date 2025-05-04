@@ -2,9 +2,9 @@ use std::cmp::max_by;
 
 use anchor_lang::prelude::*;
 use location_registry::RegisteredLocation;
-use witness_manager::{PresenceChallenge, WitnessNode};
+use witness_manager::{WitnessNode};
 
-use crate::{error::LocationEpochError, program::LocationEpoch, Testimony};
+use crate::{error::LocationEpochError, state::LocationEpoch, Testimony};
 
 
 
@@ -18,20 +18,14 @@ pub struct SubmitWitnessTestimony<'info> {
     #[account(mut)]
     pub witness_node: Account<'info, WitnessNode>,
 
-    #[account()]
-    pub presence_challenge: Account<'info, PresenceChallenge>,
-
     #[account(
         init,
         payer = signer,
-        seeds = [b"testimony", presence_challenge.key().as_ref()],
+        seeds = [b"testimony", witness_node.key().as_ref(), location_epoch.key().as_ref()],
         bump,
         space = 8
     )]
     pub testimony : Account<'info, Testimony>,
-   
-
-    pub location: Account<'info, RegisteredLocation>,
 
     pub location_epoch: Account<'info, LocationEpoch>,
 

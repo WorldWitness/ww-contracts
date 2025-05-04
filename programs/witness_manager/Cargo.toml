@@ -20,5 +20,3 @@ idl-build = ["anchor-lang/idl-build"]
 [dependencies]
 anchor-lang = "0.31.0"
 location_registry = { path = "../location_registry", features = ["no-entrypoint"] } 
-location_epoch = { path = "../location_epoch", features = ["no-entrypoint"] } 
-

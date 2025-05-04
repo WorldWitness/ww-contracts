@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-location_epoch = "DBARz9f17bZT6infskfhWpepU8aj46nCN7p7hf7pFKxC"
+location_epoch_manager = "DBARz9f17bZT6infskfhWpepU8aj46nCN7p7hf7pFKxC"
 location_registry = "8oer2N17ZmMGyE3xJepNjqi2hn1EU4CwUeSWwB38PPdZ"
 verifier_manager = "8GTW8wQccLPTpVGHghTg34nJ7xu8k1cK3gNiq9FzukuA"
 witness_manager = "27J4UkeFkTWmkz7dBv3JLM72pPN3DxRocDTigNhBgKqH"

@@ -1,6 +1,6 @@
 
 use anchor_lang::prelude::*;
-use location_registry::{LocationEpoch, RegisteredLocation};
+use location_registry::{RegisteredLocation};
 use crate::{error::LocationEpochError, state::*};
 
 #[derive(Accounts)]
@@ -32,9 +32,9 @@ pub fn handler(ctx: Context<CreateNewLocationEpoch>) -> Result<()> {
 
     ctx.accounts.location.stats.num_segments += 1;
     ctx.accounts.location.stats.last_created = current_time;
-    ctx.accounts.new_segment.start_time = current_time;
-    ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location.policy.segment_duration;
-    ctx.accounts.new_segment.issued_policy = ctx.accounts.location.policy.clone();
+    // ctx.accounts.new_segment.start_time = current_time;
+    // ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location.policy.segment_duration;
+    // ctx.accounts.new_segment.issued_policy = ctx.accounts.location.policy.clone();
     
 
     Ok(())
