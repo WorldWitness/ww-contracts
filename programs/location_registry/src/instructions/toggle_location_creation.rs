@@ -1,9 +1,8 @@
-
 use anchor_lang::prelude::*;
 use crate::state::*;
 
 #[derive(Accounts)]
-pub struct EnableLocationCreation<'info> {
+pub struct ToggleLocationCreation<'info> {
 
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -15,8 +14,8 @@ pub struct EnableLocationCreation<'info> {
 }
 
 
-pub fn handler(ctx: Context<EnableLocationCreation>) -> Result<()> {
+pub fn handler(ctx: Context<ToggleLocationCreation>) -> Result<()> {
     let location_counter = &mut ctx.accounts.location_counter;
-    location_counter.is_frozen = false;
+    location_counter.is_frozen = !location_counter.is_frozen;
     Ok(())
 }

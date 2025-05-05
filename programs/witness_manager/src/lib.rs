@@ -43,10 +43,6 @@ pub mod witness_manager {
     pub fn get_status_of_current_presence_challenge(ctx: Context<InitializeWitness>) -> Result<()> {
         Ok(())
     }
-    
-    pub fn submit_witness_testimony(ctx: Context<InitializeWitness>) -> Result<()> {
-        Ok(())
-    }
 
 
 }

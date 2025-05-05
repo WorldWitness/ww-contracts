@@ -26,19 +26,15 @@ pub mod location_registry {
         create_location::handler(ctx, metadata, policy)
     }
 
-    pub fn disable_location_creation(ctx: Context<DisableLocationCreation>) -> Result<()> {
-        disable_location_creation::handler(ctx)
+    pub fn toggle_location_creation(ctx: Context<ToggleLocationCreation>) -> Result<()> {
+        toggle_location_creation::handler(ctx)
     }
 
-    pub fn enable_location_creation(ctx: Context<EnableLocationCreation>) -> Result<()> {
-        enable_location_creation::handler(ctx)
-    }
-
-    pub fn change_location_metadata(ctx: Context<EnableLocationCreation>, location_index : u128, metadata :  LocationMetadata ) ->Result<()>{
+    pub fn change_location_metadata(ctx: Context<ToggleLocationCreation>, location_index : u128, metadata :  LocationMetadata ) ->Result<()>{
         Ok(())
     }
 
-    pub fn change_location_policy(ctx: Context<EnableLocationCreation>, location_index : u128, policy :  LocationPolicy ) ->Result<()>{
+    pub fn change_location_policy(ctx: Context<ToggleLocationCreation>, location_index : u128, policy :  LocationPolicy ) ->Result<()>{
         Ok(())
     }
 

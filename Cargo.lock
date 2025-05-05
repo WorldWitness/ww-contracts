@@ -2062,6 +2062,8 @@ name = "verifier_manager"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
+ "location_epoch_manager",
+ "witness_manager",
 ]
 
 [[package]]

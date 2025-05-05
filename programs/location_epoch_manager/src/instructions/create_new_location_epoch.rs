@@ -32,9 +32,11 @@ pub fn handler(ctx: Context<CreateNewLocationEpoch>) -> Result<()> {
 
     ctx.accounts.location.stats.num_segments += 1;
     ctx.accounts.location.stats.last_created = current_time;
-    // ctx.accounts.new_segment.start_time = current_time;
-    // ctx.accounts.new_segment.end_time = current_time + ctx.accounts.location.policy.segment_duration;
-    // ctx.accounts.new_segment.issued_policy = ctx.accounts.location.policy.clone();
+
+    ctx.accounts.new_epoch.phase = LocationEpochPhase::TestimonySubmission;
+    ctx.accounts.new_epoch.num_testimonies = 0;
+    ctx.accounts.new_epoch.current_phase_start_time = current_time;
+    ctx.accounts.new_epoch.issued_policy = ctx.accounts.location.policy.clone();
     
 
     Ok(())
